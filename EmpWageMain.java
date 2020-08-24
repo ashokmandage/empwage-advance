@@ -1,28 +1,30 @@
 public class EmpWageMain
- {
-		public static final int IS_FULL_TIME=1;
-                public static final int IS_PART_TIME=2;
-                public static final int EMP_RATE_PER_HOUR=20;
-                 public static final int NUMBER_WORKING_DAYS=20;
-        public static void main(String args[])
+  {
+	 public static final int IS_PART_TIME = 1;
+        public static final int IS_FULL_TIME = 2;
+
+        private final String company;
+        private final int empRatePerHour;
+        private final int numOfWorkingDays;
+        private final int maxHoursPerMonth;
+
+        public EmpWageMain(String company, int empRatePerHour,
+                              int numOfWorkingDays, int maxHoursPerMonth)
         {
-                EmpWageMain empwagewhile=new EmpWageMain();
-                empwagewhile.calculate20wage();
+                this.company = company;
+                this.empRatePerHour = empRatePerHour;
+                this.numOfWorkingDays = numOfWorkingDays;
+                this.maxHoursPerMonth = maxHoursPerMonth;
         }
-        public void calculate20wage()
+        private int computeEmpWage()
         {
-                int empHrs;
-                int empWage;
-                int totalEmpWage=0;
-                int totalMaxEmpHrs=100;
-                int totalHrs=0;
-                int totalWorkingDays=0;
-        while(totalHrs<=totalMaxEmpHrs && totalWorkingDays<=NUMBER_WORKING_DAYS)
+         int empHrs = 0, totalEmpHrs = 0,totalWorkingDays = 0;
+          while(totalEmpHrs <= maxHoursPerMonth && totalWorkingDays < numOfWorkingDays)
         {
                 totalWorkingDays++;
-                  int randomCheck=(int)((Math.random()*10)%3);
+                  int empCheck = (int)((Math.random()*10)%3);
 
-                 switch(randomCheck)
+                 switch(empCheck)
                 {
                         case IS_PART_TIME:
                         empHrs=4;
@@ -35,12 +37,19 @@ public class EmpWageMain
                         default:
                                 empHrs=0;
                 }
-                   totalHrs=totalHrs+empHrs;
+                   totalEmpHrs += empHrs;
 
-                }
-                totalEmpWage=totalHrs*EMP_RATE_PER_HOUR;
-                System.out.println("employee total hours: "+totalHrs);
+       System.out.println("Day#: " + totalWorkingDays + " Emp Hr: "  +empHrs);
 
-                System.out.println("totalwage: "+totalEmpWage);
+        }
+        return totalEmpHrs * empRatePerHour;
+     }
+
+        public static void main(String args[])
+        {
+        EmpWageMain dMart = new EmpWageMain("DMart",20,2,10);
+        EmpWageMain bigBasket = new EmpWageMain("BigBasket",25,2,15);
+        System.out.println("Total Emp Wage for company: " +dMart.company + " is: " + dMart.computeEmpWage());
+        System.out.println("Total Emp Wage for company: " +bigBasket.company + " is: " + bigBasket.computeEmpWage());
 	}
 }
